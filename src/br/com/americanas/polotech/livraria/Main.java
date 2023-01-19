@@ -10,10 +10,14 @@ public class Main {
                 "J. R. R. Tolkien", "Martins Fontes");
 
         l1.showLivroInfos();
+        System.out.println();
+        l1.alterarDadosDosLivros(2, "O Senhor dos Aneis: As duas torres", 99.99,
+                5, "J. R. R. Tolkien", "Martins Fontes");
+        l1.showLivroInfos();
 
         Album A1 = new Album("Album", 1, "by the way", 200.00,
                 50, "Red hot", "Rock", "melhor dos anos 2000");
 
-        A1.showAlbumInfos();
+        System.out.println(A1.toString());
     }
 }

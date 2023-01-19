@@ -15,4 +15,16 @@ public class Filme extends  Produto{
         this.produtores = produtores;
         this.qtdFilmes++;
     }
+
+    public String getDiretores() {
+        return this.diretores;
+    }
+
+    public String getProdutores() {
+        return this.produtores;
+    }
+
+    public String getEstudio() {
+        return this.estudio;
+    }
 }

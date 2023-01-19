@@ -15,15 +15,22 @@ public class Album extends  Produto{
     }
 
     public String getGenero() {
-        return genero;
+        return this.genero;
     }
 
     public String getSelos() {
-        return selos;
+        return this.selos;
     }
 
     public String getMusicosEBandas() {
-        return musicosEBandas;
+        return this.musicosEBandas;
+    }
+
+    @Override
+    public String toString() {
+        return "Id: " + getId() + "\nNome do Album: " + getNome() + "\nBanda/musicos: " + this.getMusicosEBandas()
+                + "\nGenero: " + this.getGenero() + "\nSelos: " + this.getSelos() + "Preço: R$ " + getPreco()
+                + "\nQuantidade em estoque: "+ getNumProdutos();
     }
 
     public void showAlbumInfos(){

@@ -11,4 +11,8 @@ public class Brinquedo extends  Produto {
         this.qtdBrinquedos++;
 
     }
+
+    public String getTipo() {
+        return tipo;
+    }
 }

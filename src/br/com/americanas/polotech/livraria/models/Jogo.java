@@ -12,4 +12,12 @@ public class Jogo extends  Produto{
         this.estudio = estudio;
         this.qtdJogos++;
     }
+
+    public String getDistribuidora() {
+        return this.distribuidora;
+    }
+
+    public String getEstudio() {
+        return this.estudio;
+    }
 }

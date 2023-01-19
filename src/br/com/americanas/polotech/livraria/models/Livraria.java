@@ -9,10 +9,10 @@ public class Livraria {
     private  BigDecimal saldoCaixa;
 
     List<Album> albunsList = new ArrayList<>();
-    List<Album> brinquedosList = new ArrayList<>();
-    List<Album> jogosList = new ArrayList<>();
-    List<Album> filmesList = new ArrayList<>();
-    List<Album> livrosList = new ArrayList<>();
+    List<Brinquedo> brinquedosList = new ArrayList<>();
+    List<Filme> jogosList = new ArrayList<>();
+    List<Jogo> filmesList = new ArrayList<>();
+    List<Livro> livrosList = new ArrayList<>();
 
 
 

@@ -38,7 +38,6 @@ public class Livro extends  Produto {
        System.out.printf("Id: %d\nNome do Livro: %s\nEscrito por: " +
                "%s \nEditora: %s\nPreço: R$ %.2f\nQuantidade em estoque: %d\n",
                getId(), getNome(), this.getEscritor(), this.getEditora(), getPreco(), getNumProdutos());
-
    }
 
 
