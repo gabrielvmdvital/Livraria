@@ -33,11 +33,6 @@ public class Brinquedo extends  Produto {
                 + "\nPreço: R$ " + getPreco() + "\nQuantidade em estoque: "+ getNumProdutos();
     }
 
-    @Override
-    public void showProInfo() {
-        System.out.println(this.toString());
-        System.out.println();
-    }
 
     public static void addProduto(List<Brinquedo> toys, Scanner sc){
 
@@ -89,4 +84,9 @@ public class Brinquedo extends  Produto {
                 Objects.equals(getNome(), brinquedo.getNome());
     }
 
+    public void showProtoInfo() {
+        System.out.println(this.toString());
+        System.out.println();
+
+    }
 }
