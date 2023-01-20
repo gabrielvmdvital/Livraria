@@ -8,7 +8,20 @@ import java.util.*;
 
 public class Livraria {
 
-    private  BigDecimal saldoCaixa;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        menu(sc);
+    }
+
+    private  static double saldoCaixa;
+
+    public static double getSaldoCaixa() {
+        return saldoCaixa;
+    }
+
+    public static void setSaldoCaixa(double saldoCaixa) {
+        saldoCaixa = saldoCaixa;
+    }
 
     public static List<Album> albunsList = new ArrayList<>();
     public static List<Brinquedo> brinquedosList = new ArrayList<>();
@@ -18,7 +31,7 @@ public class Livraria {
 
 
 
-    public static void menu(Scanner sc, Produto produto){
+    public static void menu(Scanner sc){
 
 
         loopMenuPrincipal:
@@ -32,11 +45,11 @@ public class Livraria {
             System.out.print("| 3 - Registrar Caixa em R$:                   | \n");
             System.out.println("*---------------------------------------------*");
 
-            switch (Integer.parseInt(sc.nextLine())){
+            switch (Integer.parseInt(sc.nextLine())) {
                 case 0 -> {
                     break loopMenuPrincipal;
                 }
-                case 1-> {
+                case 1 -> {
                     System.out.println("Informe o nome de usuario: ");
                     String nome = sc.nextLine();
                     System.out.println("Informe a senha: ");
@@ -46,7 +59,7 @@ public class Livraria {
                     break;
                 }
 
-                case 2-> {
+                case 2 -> {
                     System.out.println("Informe seu login: ");
                     String userName = sc.nextLine();
                     System.out.println("Informe sua senha: ");
@@ -55,274 +68,850 @@ public class Livraria {
                     User user = User.loginSystem(userName, senha);
                     loopUserLogged:
                     while (user.isUserLogged()) {
-                            menunUserLogged(user);
-                            if (user.getTypeUser().equals("ADM")) {
-                                switch (Integer.parseInt(sc.nextLine())) {
-                                    case 1 -> {
-                                        loopAddProduto:
-                                        do {
-                                            System.out.println("Deseja sair do menur de adição de produtos?: (S ou N)");
-                                            if (sc.nextLine().equals("S".toLowerCase())) {
-                                                break loopAddProduto;
-                                            }
-                                            System.out.println("Informe o tipo do produto: ");
-                                            switch (ProdutoEnum.valueOf(sc.nextLine().toUpperCase())) {
-                                                case ALBUNS_DE_MUSICA -> {
-                                                    Album.addProduto(albunsList, sc);
-                                                    System.out.println("Produto adicionado com sucesso!");
-                                                    break;
-                                                }
-
-                                                case BRINQUEDO -> {
-                                                    Brinquedo.addProduto(brinquedosList, sc);
-                                                    System.out.println("Produto adicionado com sucesso!");
-                                                    break;
-
-                                                }
-
-                                                case FILME -> {
-                                                    Filme.addProduto(filmesList, sc);
-                                                    System.out.println("Produto adicionado com sucesso!");
-                                                    break;
-                                                }
-
-                                                case JOGO -> {
-                                                    Jogo.addProduto(jogosList, sc);
-                                                    System.out.println("Produto adicionado com sucesso!");
-                                                    break;
-                                                }
-
-                                                case LIVRO -> {
-                                                    Livro.addProduto(livrosList, sc);
-                                                    System.out.println("Produto adicionado com sucesso!");
-                                                    break;
-                                                }
+                        menunUserLogged(user);
+                        if (user.getTypeUser().equals("ADM")) {
+                            switch (Integer.parseInt(sc.nextLine())) {
+                                case 1 -> {
+                                    loopAddProduto:
+                                    do {
+                                        System.out.println("Deseja sair do menur de adição de produtos?: (S ou N)");
+                                        if (sc.nextLine().equals("S".toLowerCase())) {
+                                            break loopAddProduto;
+                                        }
+                                        System.out.println("Informe o tipo do produto: ");
+                                        switch (ProdutoEnum.valueOf(sc.nextLine().toUpperCase())) {
+                                            case ALBUNS_DE_MUSICA -> {
+                                                Album.addProduto(albunsList, sc);
+                                                System.out.println("Produto adicionado com sucesso!");
+                                                break;
                                             }
 
-                                        } while (true);
-                                    }
-                                    case 2 -> {
-                                        loopAlteraProduto:
-                                        do {
-                                            System.out.println("Deseja sair do menur de adição de produtos?: (S ou N)");
-                                            if (sc.nextLine().equals("S".toLowerCase())) {
-                                                break loopAlteraProduto;
-                                            }
-                                            System.out.println("Informe o tipo do produto que deseja alterar: ");
-                                            switch (ProdutoEnum.valueOf(sc.nextLine().toUpperCase())) {
-                                                case ALBUNS_DE_MUSICA -> {
-                                                    System.out.println("Informe o id do album que deseja alterar: ");
-                                                    int id = Integer.parseInt(sc.nextLine());
-                                                    System.out.println("Informe o nomo valor do produto: ");
-                                                    double preco = Double.parseDouble(sc.nextLine());
-                                                    Optional<Album> newProduto = albunsList.stream().filter((Album album) ->
-                                                            album.getId() == id).findFirst();
+                                            case BRINQUEDO -> {
+                                                Brinquedo.addProduto(brinquedosList, sc);
+                                                System.out.println("Produto adicionado com sucesso!");
+                                                break;
 
-                                                    if (newProduto.isPresent()) {
-                                                        albunsList.remove(newProduto.get().getId());
-                                                        newProduto.get().setPreco(preco);
-                                                        albunsList.add(newProduto.get());
-                                                        System.out.println("Valor do produtor " + newProduto.get().getNome() +
-                                                                "atualizado com sucesso!");
-
-                                                    } else {
-                                                        System.out.println("Produto não encontrado!");
-                                                    }
-                                                    break;
-
-                                                }
-
-                                                case BRINQUEDO -> {
-
-                                                    System.out.println("Informe o id do album que deseja alterar: ");
-                                                    int id = Integer.parseInt(sc.nextLine());
-                                                    System.out.println("Informe o nomo valor do produto: ");
-                                                    double preco = Double.parseDouble(sc.nextLine());
-                                                    Optional<Brinquedo> newProduto = brinquedosList.stream().filter((Brinquedo toy) ->
-                                                            toy.getId() == id).findFirst();
-
-                                                    if (newProduto.isPresent()) {
-                                                        brinquedosList.remove(newProduto.get().getId());
-                                                        newProduto.get().setPreco(preco);
-                                                        brinquedosList.add(newProduto.get());
-                                                        System.out.println("Valor do produtor " + newProduto.get().getNome() +
-                                                                "atualizado com sucesso!");
-
-                                                    } else {
-                                                        System.out.println("Produto não encontrado!");
-                                                    }
-                                                    break;
-
-                                                }
-
-                                                case FILME -> {
-                                                    System.out.println("Informe o id do album que deseja alterar: ");
-                                                    int id = Integer.parseInt(sc.nextLine());
-                                                    Optional<Filme> newProduto = filmesList.stream().filter((Filme filme) ->
-                                                            filme.getId() == id).findFirst();
-
-                                                    System.out.println("Informe o nomo valor do produto: ");
-                                                    double preco = Double.parseDouble(sc.nextLine());
-
-                                                    if (newProduto.isPresent()) {
-                                                        filmesList.remove(newProduto.get().getId());
-                                                        newProduto.get().setPreco(preco);
-                                                        filmesList.add(newProduto.get());
-                                                        System.out.println("Valor do produtor " + newProduto.get().getNome() +
-                                                                "atualizado com sucesso!");
-                                                    } else {
-                                                        System.out.println("Produto não encontrado!");
-                                                    }
-                                                    break;
-
-                                                }
-
-                                                case JOGO -> {
-
-                                                    System.out.println("Informe o id do album que deseja alterar: ");
-                                                    int id = Integer.parseInt(sc.nextLine());
-                                                    System.out.println("Informe o nomo valor do produto: ");
-                                                    double preco = Double.parseDouble(sc.nextLine());
-                                                    Optional<Jogo> newProduto = jogosList.stream().filter((Jogo jogo) ->
-                                                            jogo.getId() == id).findFirst();
-
-                                                    if (newProduto.isPresent()) {
-                                                        jogosList.remove(newProduto.get().getId());
-                                                        newProduto.get().setPreco(preco);
-                                                        jogosList.add(newProduto.get());
-                                                        System.out.println("Valor do produtor " + newProduto.get().getNome() +
-                                                                "atualizado com sucesso!");
-
-                                                    } else {
-                                                        System.out.println("Produto não encontrado!");
-                                                    }
-                                                    break;
-
-                                                }
-
-                                                case LIVRO -> {
-
-                                                    System.out.println("Informe o id do album que deseja alterar: ");
-                                                    int id = Integer.parseInt(sc.nextLine());
-                                                    System.out.println("Informe o nomo valor do produto: ");
-                                                    double preco = Double.parseDouble(sc.nextLine());
-                                                    Optional<Livro> newProduto = livrosList.stream().filter((Livro livro) ->
-                                                            livro.getId() == id).findFirst();
-
-                                                    if (newProduto.isPresent()) {
-                                                        livrosList.remove(newProduto.get().getId());
-                                                        newProduto.get().setPreco(preco);
-                                                        livrosList.add(newProduto.get());
-                                                        System.out.println("Valor do produtor " + newProduto.get().getNome() +
-                                                                "atualizado com sucesso!");
-
-                                                    } else {
-                                                        System.out.println("Produto não encontrado!");
-                                                    }
-
-                                                    break;
-
-                                                }
                                             }
 
-                                        } while (true);
-                                    }
-                                    case 3 -> {
+                                            case FILME -> {
+                                                Filme.addProduto(filmesList, sc);
+                                                System.out.println("Produto adicionado com sucesso!");
+                                                break;
+                                            }
 
-                                        System.out.println("*----------------------------------------------*");
-                                        System.out.print("|              Menu de remoção                 |\n");
-                                        System.out.print("|----------------------------------------------|\n");
-                                        System.out.print("| 1 - Albuns de músicas:                       |\n");
-                                        System.out.print("| 2 - Brinquedos:                              |\n");
-                                        System.out.print("| 3 - Filmes:                                  |\n");
-                                        System.out.print("| 4 - Jogos:                                   |\n");
-                                        System.out.print("| 5 - Livros:                                  |\n");
-                                        System.out.println("*---------------------------------------------*");
-                                        int opcao = Integer.parseInt(sc.nextLine());
-                                        switch (opcao) {
-                                            case 1 -> {
-                                                System.out.println("Informe o id do produto: ");
+                                            case JOGO -> {
+                                                Jogo.addProduto(jogosList, sc);
+                                                System.out.println("Produto adicionado com sucesso!");
+                                                break;
+                                            }
+
+                                            case LIVRO -> {
+                                                Livro.addProduto(livrosList, sc);
+                                                System.out.println("Produto adicionado com sucesso!");
+                                                break;
+                                            }
+                                        }
+
+                                    } while (true);
+                                }
+                                case 2 -> {
+                                    loopAlteraProduto:
+                                    do {
+                                        System.out.println("Deseja sair do menur de adição de produtos?: (S ou N)");
+                                        if (sc.nextLine().equals("S".toLowerCase())) {
+                                            break loopAlteraProduto;
+                                        }
+                                        System.out.println("Informe o tipo do produto que deseja alterar: ");
+                                        switch (ProdutoEnum.valueOf(sc.nextLine().toUpperCase())) {
+                                            case ALBUNS_DE_MUSICA -> {
+                                                System.out.println("Informe o id do album que deseja alterar: ");
                                                 int id = Integer.parseInt(sc.nextLine());
-                                                Album.removeProdutos(albunsList, id);
+                                                System.out.println("Informe o nomo valor do produto: ");
+                                                double preco = Double.parseDouble(sc.nextLine());
+                                                Optional<Album> newProduto = albunsList.stream().filter((Album album) ->
+                                                        album.getId() == id).findFirst();
+
+                                                if (newProduto.isPresent()) {
+                                                    albunsList.remove(newProduto.get().getId());
+                                                    newProduto.get().setPreco(preco);
+                                                    albunsList.add(newProduto.get());
+                                                    System.out.println("Valor do produtor " + newProduto.get().getNome() +
+                                                            "atualizado com sucesso!");
+
+                                                } else {
+                                                    System.out.println("Produto não encontrado!");
+                                                }
+                                                break;
 
                                             }
-                                            case 2 -> {
-                                                System.out.println("Informe o id do produto: ");
+
+                                            case BRINQUEDO -> {
+
+                                                System.out.println("Informe o id do album que deseja alterar: ");
                                                 int id = Integer.parseInt(sc.nextLine());
-                                                Brinquedo.removeProdutos(brinquedosList, id);
+                                                System.out.println("Informe o nomo valor do produto: ");
+                                                double preco = Double.parseDouble(sc.nextLine());
+                                                Optional<Brinquedo> newProduto = brinquedosList.stream().filter((Brinquedo toy) ->
+                                                        toy.getId() == id).findFirst();
+
+                                                if (newProduto.isPresent()) {
+                                                    brinquedosList.remove(newProduto.get().getId());
+                                                    newProduto.get().setPreco(preco);
+                                                    brinquedosList.add(newProduto.get());
+                                                    System.out.println("Valor do produtor " + newProduto.get().getNome() +
+                                                            "atualizado com sucesso!");
+
+                                                } else {
+                                                    System.out.println("Produto não encontrado!");
+                                                }
+                                                break;
 
                                             }
-                                            case 3 -> {
-                                                System.out.println("Informe o id do produto: ");
+
+                                            case FILME -> {
+                                                System.out.println("Informe o id do album que deseja alterar: ");
                                                 int id = Integer.parseInt(sc.nextLine());
-                                                Filme.removeProdutos(filmesList, id);
+                                                Optional<Filme> newProduto = filmesList.stream().filter((Filme filme) ->
+                                                        filme.getId() == id).findFirst();
+
+                                                System.out.println("Informe o nomo valor do produto: ");
+                                                double preco = Double.parseDouble(sc.nextLine());
+
+                                                if (newProduto.isPresent()) {
+                                                    filmesList.remove(newProduto.get().getId());
+                                                    newProduto.get().setPreco(preco);
+                                                    filmesList.add(newProduto.get());
+                                                    System.out.println("Valor do produtor " + newProduto.get().getNome() +
+                                                            "atualizado com sucesso!");
+                                                } else {
+                                                    System.out.println("Produto não encontrado!");
+                                                }
+                                                break;
 
                                             }
-                                            case 4 -> {
-                                                System.out.println("Informe o id do produto: ");
+
+                                            case JOGO -> {
+
+                                                System.out.println("Informe o id do album que deseja alterar: ");
                                                 int id = Integer.parseInt(sc.nextLine());
-                                                Jogo.removeProdutos(jogosList, id);
+                                                System.out.println("Informe o nomo valor do produto: ");
+                                                double preco = Double.parseDouble(sc.nextLine());
+                                                Optional<Jogo> newProduto = jogosList.stream().filter((Jogo jogo) ->
+                                                        jogo.getId() == id).findFirst();
+
+                                                if (newProduto.isPresent()) {
+                                                    jogosList.remove(newProduto.get().getId());
+                                                    newProduto.get().setPreco(preco);
+                                                    jogosList.add(newProduto.get());
+                                                    System.out.println("Valor do produtor " + newProduto.get().getNome() +
+                                                            "atualizado com sucesso!");
+
+                                                } else {
+                                                    System.out.println("Produto não encontrado!");
+                                                }
+                                                break;
 
                                             }
-                                            case 5 -> {
-                                                System.out.println("Informe o id do produto: ");
+
+                                            case LIVRO -> {
+
+                                                System.out.println("Informe o id do album que deseja alterar: ");
                                                 int id = Integer.parseInt(sc.nextLine());
-                                                Livro.removeProdutos(livrosList, id);
+                                                System.out.println("Informe o nomo valor do produto: ");
+                                                double preco = Double.parseDouble(sc.nextLine());
+                                                Optional<Livro> newProduto = livrosList.stream().filter((Livro livro) ->
+                                                        livro.getId() == id).findFirst();
+
+                                                if (newProduto.isPresent()) {
+                                                    livrosList.remove(newProduto.get().getId());
+                                                    newProduto.get().setPreco(preco);
+                                                    livrosList.add(newProduto.get());
+                                                    System.out.println("Valor do produtor " + newProduto.get().getNome() +
+                                                            "atualizado com sucesso!");
+
+                                                } else {
+                                                    System.out.println("Produto não encontrado!");
+                                                }
+
+                                                break;
 
                                             }
                                         }
-                                    }
-                                    case 4 -> {
-                                        System.out.println("Itens em Estoque: ");
-                                        System.out.println();
 
-                                        System.out.println("Lista de Albumns");
-                                        for (Album album : albunsList) {
-                                            album.showProtoInfo();
-                                            System.out.println();
+                                    } while (true);
+                                }
+                                case 3 -> {
+
+                                    System.out.println("*----------------------------------------------*");
+                                    System.out.print("|              Menu de remoção                 |\n");
+                                    System.out.print("|----------------------------------------------|\n");
+                                    System.out.print("| 1 - Albuns de músicas:                       |\n");
+                                    System.out.print("| 2 - Brinquedos:                              |\n");
+                                    System.out.print("| 3 - Filmes:                                  |\n");
+                                    System.out.print("| 4 - Jogos:                                   |\n");
+                                    System.out.print("| 5 - Livros:                                  |\n");
+                                    System.out.println("*---------------------------------------------*");
+                                    int opcao = Integer.parseInt(sc.nextLine());
+                                    switch (opcao) {
+                                        case 1 -> {
+                                            System.out.println("Informe o id do produto: ");
+                                            int id = Integer.parseInt(sc.nextLine());
+                                            Album.removeProdutos(albunsList, id);
+                                            break;
+
                                         }
+                                        case 2 -> {
+                                            System.out.println("Informe o id do produto: ");
+                                            int id = Integer.parseInt(sc.nextLine());
+                                            Brinquedo.removeProdutos(brinquedosList, id);
+                                            break;
 
-                                        System.out.println("Lista de Briquedos");
-                                        for (Brinquedo toy : brinquedosList) {
-                                            toy.showProtoInfo();
-                                            System.out.println();
                                         }
+                                        case 3 -> {
+                                            System.out.println("Informe o id do produto: ");
+                                            int id = Integer.parseInt(sc.nextLine());
+                                            Filme.removeProdutos(filmesList, id);
+                                            break;
 
-                                        System.out.println("Lista de Fimles");
-                                        for (Filme filme : filmesList) {
-                                            filme.showProtoInfo();
-                                            System.out.println();
                                         }
+                                        case 4 -> {
+                                            System.out.println("Informe o id do produto: ");
+                                            int id = Integer.parseInt(sc.nextLine());
+                                            Jogo.removeProdutos(jogosList, id);
+                                            break;
 
-                                        System.out.println("Lista de Jogos");
-                                        for (Jogo jogo : jogosList) {
-                                            jogo.showProtoInfo();
-                                            System.out.println();
                                         }
+                                        case 5 -> {
+                                            System.out.println("Informe o id do produto: ");
+                                            int id = Integer.parseInt(sc.nextLine());
+                                            Livro.removeProdutos(livrosList, id);
+                                            break;
 
-                                        System.out.println("Lista de Livros");
-                                        for (Livro livro : livrosList) {
-                                            livro.showProtoInfo();
-                                            System.out.println();
                                         }
                                     }
                                 }
+                                case 4 -> {
+                                    System.out.println("Itens em Estoque: ");
+                                    System.out.println();
+
+                                    System.out.println("Lista de Albumns");
+                                    for (Album album : albunsList) {
+                                        album.showProtoInfo();
+                                        System.out.println();
+                                    }
+
+                                    System.out.println("Lista de Briquedos");
+                                    for (Brinquedo toy : brinquedosList) {
+                                        toy.showProtoInfo();
+                                        System.out.println();
+                                    }
+
+                                    System.out.println("Lista de Fimles");
+                                    for (Filme filme : filmesList) {
+                                        filme.showProtoInfo();
+                                        System.out.println();
+                                    }
+
+                                    System.out.println("Lista de Jogos");
+                                    for (Jogo jogo : jogosList) {
+                                        jogo.showProtoInfo();
+                                        System.out.println();
+                                    }
+
+                                    System.out.println("Lista de Livros");
+                                    for (Livro livro : livrosList) {
+                                        livro.showProtoInfo();
+                                        System.out.println();
+                                    }
+                                    break;
+                                }
+                                case 5 -> {
+                                    listarProdutosPerCategory();
+                                    int opcao = Integer.parseInt(sc.nextLine());
+                                    switch (opcao) {
+                                        case 1 -> {
+                                            System.out.println("Lista de Albumns");
+                                            for (Album album : albunsList) {
+                                                album.showProtoInfo();
+                                                System.out.println();
+                                            }
+                                            break;
+
+                                        }
+
+                                        case 2 -> {
+                                            System.out.println("Lista de Briquedos");
+                                            for (Brinquedo toy : brinquedosList) {
+                                                toy.showProtoInfo();
+                                                System.out.println();
+                                            }
+                                            break;
+                                        }
+
+                                        case 3 -> {
+                                            System.out.println("Lista de Fimles");
+                                            for (Filme filme : filmesList) {
+                                                filme.showProtoInfo();
+                                                System.out.println();
+                                            }
+                                            break;
+                                        }
+
+                                        case 4 -> {
+                                            System.out.println("Lista de Jogos");
+                                            for (Jogo jogo : jogosList) {
+                                                jogo.showProtoInfo();
+                                                System.out.println();
+                                            }
+                                            break;
+                                        }
+
+                                        case 5 -> {
+                                            System.out.println("Lista de Livros");
+                                            for (Livro livro : livrosList) {
+                                                livro.showProtoInfo();
+                                                System.out.println();
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                                case 6 -> {
+                                    listarProdutosPerCategory();
+                                    int opcao = Integer.parseInt(sc.nextLine());
+                                    String msgNaoExiste = "Produto não existe no estoque";
+                                    String msgProtudoEmFalta = "Produto em falta!";
+                                    String msgSucess = "Produto adicionado ao carrinho com sucesso!";
+                                    switch (opcao) {
+                                        case 1 -> {
+                                            System.out.println("Informe o nome do album: ");
+                                            String nome = sc.nextLine();
+                                            for (Album album : albunsList) {
+                                                if (album.getNome().equals(nome)) {
+                                                    if (album.getNumProdutos() > 0) {
+                                                        user.getCarrinhoDeCompras().add(album);
+                                                        album.setNumProdutos(album.getNumProdutos() - 1);
+                                                    } else {
+                                                        System.out.println(msgProtudoEmFalta);
+                                                    }
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+
+
+                                        case 2 -> {
+                                            System.out.println("Informe o nome do briquedo: ");
+                                            String nome = sc.nextLine();
+                                            for (Brinquedo toy : brinquedosList) {
+                                                if (toy.getNome().equals(nome)) {
+                                                    if (toy.getNumProdutos() > 0) {
+                                                        user.getCarrinhoDeCompras().add(toy);
+                                                        toy.setNumProdutos(toy.getNumProdutos() - 1);
+                                                        System.out.println(msgSucess);
+                                                    } else {
+                                                        System.out.println(msgProtudoEmFalta);
+                                                    }
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+
+                                        case 3 -> {
+                                            System.out.println("Informe o nome do Filme: ");
+                                            String nome = sc.nextLine();
+                                            for (Filme filme : filmesList) {
+                                                if (filme.getNome().equals(nome)) {
+                                                    if (filme.getNumProdutos() > 0) {
+                                                        user.getCarrinhoDeCompras().add(filme);
+                                                        filme.setNumProdutos(filme.getNumProdutos() - 1);
+                                                    } else {
+                                                        System.out.println(msgProtudoEmFalta);
+                                                    }
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+
+
+                                        case 4 -> {
+                                            System.out.println("Informe o nome do Jogo: ");
+                                            String nome = sc.nextLine();
+                                            for (Jogo jogo : jogosList) {
+                                                if (jogo.getNome().equals(nome)) {
+                                                    if (jogo.getNumProdutos() > 0) {
+                                                        user.getCarrinhoDeCompras().add(jogo);
+                                                        jogo.setNumProdutos(jogo.getNumProdutos() - 1);
+                                                        System.out.println(msgSucess);
+                                                    } else {
+                                                        System.out.println(msgProtudoEmFalta);
+                                                    }
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+                                        }
+
+                                        case 5 -> {
+                                            System.out.println("Informe o nome do Livro: ");
+                                            String nome = sc.nextLine();
+                                            for (Livro livro : livrosList) {
+                                                if (livro.getNome().equals(nome)) {
+                                                    if (livro.getNumProdutos() > 0) {
+                                                        user.getCarrinhoDeCompras().add(livro);
+                                                        livro.setNumProdutos(livro.getNumProdutos() - 1);
+                                                        System.out.println(msgSucess);
+                                                    } else {
+                                                        System.out.println(msgProtudoEmFalta);
+                                                    }
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+                                    }
+                                }
+                                case 7 -> {
+                                    listarProdutosPerCategory();
+                                    int opcao = Integer.parseInt(sc.nextLine());
+                                    String msgNaoExiste = "Produto não existe no estoque";
+                                    String msgProtudoEmFalta = "Produto em falta!";
+                                    String msgSucess = "Produto removido do carrinho com sucesso!";
+                                    switch (opcao) {
+                                        case 1 -> {
+                                            System.out.println("Informe o nome do album: ");
+                                            String nome = sc.nextLine();
+                                            for (Album album : albunsList) {
+                                                if (album.getNome().equals(nome)) {
+                                                    user.getCarrinhoDeCompras().remove(album);
+                                                    album.setNumProdutos(album.getNumProdutos() + 1);
+
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+
+
+                                        case 2 -> {
+                                            System.out.println("Informe o nome do briquedo: ");
+                                            String nome = sc.nextLine();
+                                            for (Brinquedo toy : brinquedosList) {
+                                                if (toy.getNome().equals(nome)) {
+                                                    user.getCarrinhoDeCompras().remove(toy);
+                                                    toy.setNumProdutos(toy.getNumProdutos() + 1);
+
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+
+                                        case 3 -> {
+                                            System.out.println("Informe o nome do Filme: ");
+                                            String nome = sc.nextLine();
+                                            for (Filme filme : filmesList) {
+                                                if (filme.getNome().equals(nome)) {
+                                                    user.getCarrinhoDeCompras().remove(filme);
+                                                    filme.setNumProdutos(filme.getNumProdutos() + 1);
+
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+
+
+                                        case 4 -> {
+                                            System.out.println("Informe o nome do Jogo: ");
+                                            String nome = sc.nextLine();
+                                            for (Jogo jogo : jogosList) {
+                                                if (jogo.getNome().equals(nome)) {
+                                                    user.getCarrinhoDeCompras().remove(jogo);
+                                                    jogo.setNumProdutos(jogo.getNumProdutos() + 1);
+
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+                                        }
+
+                                        case 5 -> {
+                                            System.out.println("Informe o nome do Livro: ");
+                                            String nome = sc.nextLine();
+                                            for (Livro livro : livrosList) {
+                                                if (livro.getNome().equals(nome)) {
+                                                    user.getCarrinhoDeCompras().remove(livro);
+                                                    livro.setNumProdutos(livro.getNumProdutos() + 1);
+
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+                                        }
+
+                                    }
+                                }
+                                case 8 -> {
+                                    System.out.println("Carrinho de compras");
+                                    for (Produto carrinho : user.getCarrinhoDeCompras()) {
+                                        carrinho.showProtoInfo();
+
+                                    }
+                                    break;
+                                }
+                                case 9 -> {
+                                    String msgFinalizarCompras = "Compras realizadas com sucesso!";
+                                    double totalAPagar = user.totalAPagar();
+                                    break;
+
+
+                                }
+                                case 0 ->{
+                                    break loopUserLogged;
+                                }
+                            }
+                        } else {
+                            switch (Integer.parseInt(sc.nextLine())) {
+                                case 1 -> {
+                                    System.out.println("Itens em Estoque: ");
+                                    System.out.println();
+
+                                    System.out.println("Lista de Albumns");
+                                    for (Album album : albunsList) {
+                                        album.showProtoInfo();
+                                        System.out.println();
+                                    }
+
+                                    System.out.println("Lista de Briquedos");
+                                    for (Brinquedo toy : brinquedosList) {
+                                        toy.showProtoInfo();
+                                        System.out.println();
+                                    }
+
+                                    System.out.println("Lista de Fimles");
+                                    for (Filme filme : filmesList) {
+                                        filme.showProtoInfo();
+                                        System.out.println();
+                                    }
+
+                                    System.out.println("Lista de Jogos");
+                                    for (Jogo jogo : jogosList) {
+                                        jogo.showProtoInfo();
+                                        System.out.println();
+                                    }
+
+                                    System.out.println("Lista de Livros");
+                                    for (Livro livro : livrosList) {
+                                        livro.showProtoInfo();
+                                        System.out.println();
+                                    }
+                                    break;
+                                }
+                                case 2 -> {
+                                    listarProdutosPerCategory();
+                                    int opcao = Integer.parseInt(sc.nextLine());
+                                    switch (opcao) {
+                                        case 1 -> {
+                                            System.out.println("Lista de Albumns");
+                                            for (Album album : albunsList) {
+                                                album.showProtoInfo();
+                                                System.out.println();
+                                            }
+                                            break;
+
+                                        }
+
+                                        case 2 -> {
+                                            System.out.println("Lista de Briquedos");
+                                            for (Brinquedo toy : brinquedosList) {
+                                                toy.showProtoInfo();
+                                                System.out.println();
+                                            }
+                                            break;
+                                        }
+
+                                        case 3 -> {
+                                            System.out.println("Lista de Fimles");
+                                            for (Filme filme : filmesList) {
+                                                filme.showProtoInfo();
+                                                System.out.println();
+                                            }
+                                            break;
+                                        }
+
+                                        case 4 -> {
+                                            System.out.println("Lista de Jogos");
+                                            for (Jogo jogo : jogosList) {
+                                                jogo.showProtoInfo();
+                                                System.out.println();
+                                            }
+                                            break;
+                                        }
+
+                                        case 5 -> {
+                                            System.out.println("Lista de Livros");
+                                            for (Livro livro : livrosList) {
+                                                livro.showProtoInfo();
+                                                System.out.println();
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                                case 3 -> {
+                                    listarProdutosPerCategory();
+                                    int opcao = Integer.parseInt(sc.nextLine());
+                                    String msgNaoExiste = "Produto não existe no estoque";
+                                    String msgProtudoEmFalta = "Produto em falta!";
+                                    String msgSucess = "Produto adicionado ao carrinho com sucesso!";
+                                    switch (opcao) {
+                                        case 1 -> {
+                                            System.out.println("Informe o nome do album: ");
+                                            String nome = sc.nextLine();
+                                            for (Album album : albunsList) {
+                                                if (album.getNome().equals(nome)) {
+                                                    if (album.getNumProdutos() > 0) {
+                                                        user.getCarrinhoDeCompras().add(album);
+                                                        album.setNumProdutos(album.getNumProdutos() - 1);
+                                                    } else {
+                                                        System.out.println(msgProtudoEmFalta);
+                                                    }
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+
+
+                                        case 2 -> {
+                                            System.out.println("Informe o nome do briquedo: ");
+                                            String nome = sc.nextLine();
+                                            for (Brinquedo toy : brinquedosList) {
+                                                if (toy.getNome().equals(nome)) {
+                                                    if (toy.getNumProdutos() > 0) {
+                                                        user.getCarrinhoDeCompras().add(toy);
+                                                        toy.setNumProdutos(toy.getNumProdutos() - 1);
+                                                        System.out.println(msgSucess);
+                                                    } else {
+                                                        System.out.println(msgProtudoEmFalta);
+                                                    }
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+
+                                        case 3 -> {
+                                            System.out.println("Informe o nome do Filme: ");
+                                            String nome = sc.nextLine();
+                                            for (Filme filme : filmesList) {
+                                                if (filme.getNome().equals(nome)) {
+                                                    if (filme.getNumProdutos() > 0) {
+                                                        user.getCarrinhoDeCompras().add(filme);
+                                                        filme.setNumProdutos(filme.getNumProdutos() - 1);
+                                                    } else {
+                                                        System.out.println(msgProtudoEmFalta);
+                                                    }
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+
+
+                                        case 4 -> {
+                                            System.out.println("Informe o nome do Jogo: ");
+                                            String nome = sc.nextLine();
+                                            for (Jogo jogo : jogosList) {
+                                                if (jogo.getNome().equals(nome)) {
+                                                    if (jogo.getNumProdutos() > 0) {
+                                                        user.getCarrinhoDeCompras().add(jogo);
+                                                        jogo.setNumProdutos(jogo.getNumProdutos() - 1);
+                                                        System.out.println(msgSucess);
+                                                    } else {
+                                                        System.out.println(msgProtudoEmFalta);
+                                                    }
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+                                        }
+
+                                        case 5 -> {
+                                            System.out.println("Informe o nome do Livro: ");
+                                            String nome = sc.nextLine();
+                                            for (Livro livro : livrosList) {
+                                                if (livro.getNome().equals(nome)) {
+                                                    if (livro.getNumProdutos() > 0) {
+                                                        user.getCarrinhoDeCompras().add(livro);
+                                                        livro.setNumProdutos(livro.getNumProdutos() - 1);
+                                                        System.out.println(msgSucess);
+                                                    } else {
+                                                        System.out.println(msgProtudoEmFalta);
+                                                    }
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+                                    }
+                                }
+                                case 4 -> {
+                                    listarProdutosPerCategory();
+                                    int opcao = Integer.parseInt(sc.nextLine());
+                                    String msgNaoExiste = "Produto não existe no estoque";
+                                    String msgProtudoEmFalta = "Produto em falta!";
+                                    String msgSucess = "Produto removido do carrinho com sucesso!";
+                                    switch (opcao) {
+                                        case 1 -> {
+                                            System.out.println("Informe o nome do album: ");
+                                            String nome = sc.nextLine();
+                                            for (Album album : albunsList) {
+                                                if (album.getNome().equals(nome)) {
+                                                    user.getCarrinhoDeCompras().remove(album);
+                                                    album.setNumProdutos(album.getNumProdutos() + 1);
+
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+
+
+                                        case 2 -> {
+                                            System.out.println("Informe o nome do briquedo: ");
+                                            String nome = sc.nextLine();
+                                            for (Brinquedo toy : brinquedosList) {
+                                                if (toy.getNome().equals(nome)) {
+                                                    user.getCarrinhoDeCompras().remove(toy);
+                                                    toy.setNumProdutos(toy.getNumProdutos() + 1);
+
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+
+                                        case 3 -> {
+                                            System.out.println("Informe o nome do Filme: ");
+                                            String nome = sc.nextLine();
+                                            for (Filme filme : filmesList) {
+                                                if (filme.getNome().equals(nome)) {
+                                                    user.getCarrinhoDeCompras().remove(filme);
+                                                    filme.setNumProdutos(filme.getNumProdutos() + 1);
+
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+
+                                        }
+
+
+                                        case 4 -> {
+                                            System.out.println("Informe o nome do Jogo: ");
+                                            String nome = sc.nextLine();
+                                            for (Jogo jogo : jogosList) {
+                                                if (jogo.getNome().equals(nome)) {
+                                                    user.getCarrinhoDeCompras().remove(jogo);
+                                                    jogo.setNumProdutos(jogo.getNumProdutos() + 1);
+
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+                                        }
+
+                                        case 5 -> {
+                                            System.out.println("Informe o nome do Livro: ");
+                                            String nome = sc.nextLine();
+                                            for (Livro livro : livrosList) {
+                                                if (livro.getNome().equals(nome)) {
+                                                    user.getCarrinhoDeCompras().remove(livro);
+                                                    livro.setNumProdutos(livro.getNumProdutos() + 1);
+
+                                                } else {
+                                                    System.out.println(msgNaoExiste);
+                                                }
+                                            }
+                                            break;
+                                        }
+
+                                    }
+                                }
+                                case 5 -> {
+                                    System.out.println("Carrinho de compras");
+                                    for (Produto carrinho : user.getCarrinhoDeCompras()) {
+                                        carrinho.showProtoInfo();
+
+                                    }
+                                    break;
+                                }
+                                case 6 -> {
+                                    String msgFinalizarCompras = "Compras realizadas com sucesso!";
+                                    double totalAPagar = user.totalAPagar();
+                                    break;
+
+
+                                }
+                                case 0 ->{
+                                    break loopUserLogged;
+                                }
+
                             }
 
-
+                        }
                     }
+
+
                 }
 
+                case 3 -> {
+                    System.out.println("Informe o saldo inicial do caixa");
+                    setSaldoCaixa(Double.parseDouble(sc.nextLine()));
+                    break;
+
+                }
             }
-        }
 
-
-    }
-
-
-
-
-
+            }
+}
 
 
 
@@ -343,7 +932,7 @@ public class Livraria {
             System.out.print("| 4 - Listar todos os itens do estoque:        |\n");
             System.out.print("| 5 - Listar por categoria:                    |\n");
             System.out.print("| 6 - Adicionar produto ao carrinho:           |\n");
-            System.out.print("| 7 - Adicionar produto ao carrinho:           |\n");
+            System.out.print("| 7 - Remover produto do carrinho:             |\n");
             System.out.print("| 8 - Ver carrinho de compras:                 |\n");
             System.out.print("| 9 - Finalizar compras:                       |\n");
             System.out.println("*---------------------------------------------*");
@@ -355,13 +944,14 @@ public class Livraria {
             System.out.println("*----------------------------------------------*");
             System.out.print("|               Opções de usuario              |\n");
             System.out.print("|----------------------------------------------|\n");
+            System.out.print("|-----  Registro de caixa: R$              ----|\n");
             System.out.print("| 0 - Sair:                                    |\n");
             System.out.print("| 1 - Listar todos os itens do estoque:        |\n");
             System.out.print("| 2 - Listar por categoria:                    |\n");
-            System.out.print("| 3 - Listar por categoria:                    |\n");
-            System.out.print("| 4 - Adicionar produto ao carrinho:           |\n");
+            System.out.print("| 3 - Adicionar produto ao carrinho:           |\n");
+            System.out.print("| 4 - Remover produto do carrinho:             |\n");
             System.out.print("| 5 - Ver carrinho de compras:                 |\n");
-            System.out.print("| 5 - Finalizar compras:                       |\n");
+            System.out.print("| 6 - Finalizar compras:                       |\n");
             System.out.println("*---------------------------------------------*");
         }
     }

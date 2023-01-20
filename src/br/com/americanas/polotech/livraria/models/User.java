@@ -42,6 +42,7 @@ public class User {
     private static List<User> usuarios = new ArrayList<>();
     private List<Produto> carrinhoDeCompras = new ArrayList<>();
 
+
     public User(String userName, String password){
         if(userName.contains("admin".toLowerCase())){
             this.setTypeUser("ADM");
@@ -105,10 +106,13 @@ public class User {
 
     }
 
-    public void addProductsToCart(Produto produto){
-        if(isUserLogged()){
-        getCarrinhoDeCompras().add(produto);
-        }
-    }
+    public  double totalAPagar() {
+        double totalAPagar = 0;
+        for (Produto carrinho : this.getCarrinhoDeCompras()) {
+            totalAPagar += carrinho.getPreco();
 
+        }
+        return totalAPagar;
+    }
 }
+
