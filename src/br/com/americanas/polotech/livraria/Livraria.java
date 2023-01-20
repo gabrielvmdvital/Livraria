@@ -1,6 +1,7 @@
-package br.com.americanas.polotech.livraria.models;
+package br.com.americanas.polotech.livraria;
 
 import br.com.americanas.polotech.livraria.enums.ProdutoEnum;
+import br.com.americanas.polotech.livraria.models.*;
 
 import javax.sound.midi.Soundbank;
 import java.math.BigDecimal;

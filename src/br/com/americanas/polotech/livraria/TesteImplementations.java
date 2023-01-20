@@ -7,7 +7,7 @@ import br.com.americanas.polotech.livraria.models.Livro;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class TesteImplementations {
     public static void main(String[] args) {
         Livro l1 = new Livro(ProdutoEnum.LIVRO,"O senhor dos aneis", "Ficção/Magia e aventura",55.99, 10,
                 "J. R. R. Tolkien", "Martins Fontes");
