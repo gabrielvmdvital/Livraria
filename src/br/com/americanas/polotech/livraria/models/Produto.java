@@ -2,35 +2,29 @@ package br.com.americanas.polotech.livraria.models;
 
 import br.com.americanas.polotech.livraria.enums.ProdutoEnum;
 
-abstract class Produto {
-
-    public enum ProdutoEnum {
-
-        LIVRO(1), JOGO(2), FILME(3), ALBUNS_DE_MUSICA(4), BRINQUEDO(5);
-        private Integer productTypeId;
-        ProdutoEnum(Integer productId){
-            this.productTypeId = productTypeId;
-        }
-
-        public Integer getIdType(){
-            return this.productTypeId;
-        }
-
-    }
+abstract public class Produto {
 
     public String produtoType;
-    private int id;
     private String nome;
     private double preco;
 
     private int numProdutos;
+    private int id;
+    private static int countId = 0;
 
-    public Produto(String produtoType, int id, String nome, double preco, int numProdutos){
-        this.produtoType = produtoType;
-        this.nome = nome;
+    public int getId(){
+        return id;
+    }
+    public void setId(int id) {
         this.id = id;
-        this.preco = preco;
+    }
+
+    public Produto(ProdutoEnum category, String nome, double preco, int numProdutos){
+        this.nome = nome;
+        this.preco = (double) preco;
         this.numProdutos = numProdutos;
+        id = countId++;
+
     }
 
     public String getNome(){
@@ -39,13 +33,6 @@ abstract class Produto {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public int getId(){
-        return this.id;
-    }
-    public void setId(int id){
-        this.id = id;
     }
 
     public double getPreco(){
@@ -66,4 +53,11 @@ abstract class Produto {
     public String getProdutoType() {
         return produtoType;
     }
+
+
+
+    public abstract void showProtoInfo();
+
+
+
 }
