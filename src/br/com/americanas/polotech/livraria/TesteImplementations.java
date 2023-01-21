@@ -3,6 +3,7 @@ package br.com.americanas.polotech.livraria;
 import br.com.americanas.polotech.livraria.enums.ProdutoEnum;
 import br.com.americanas.polotech.livraria.models.Album;
 import br.com.americanas.polotech.livraria.models.Livro;
+import br.com.americanas.polotech.livraria.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class TesteImplementations {
                 "editora 2");
 
         List<Livro> livros = new ArrayList<>();
+        List<User> usuarios = new ArrayList<>();
         livros.add(l1);
         livros.add(l2);
         System.out.println("Antes de remover itens -> Quantidade de tipos livros: " + Livro.size);
@@ -33,6 +35,10 @@ public class TesteImplementations {
         System.out.println("Depois de remover itens -> Quantidade de tipos livros: " + Livro.size);
 
         livros.stream().forEach((Livro livro) -> livro.showProtoInfo());
+
+        User user1 = new User("Joao", "123123");
+        User.addUser(usuarios ,user1);
+        usuarios.forEach((user) -> System.out.println(user.getUserName()));
 
     }
 

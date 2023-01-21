@@ -2,10 +2,7 @@ package br.com.americanas.polotech.livraria.models;
 
 import br.com.americanas.polotech.livraria.enums.ProdutoEnum;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class User {
@@ -29,17 +26,12 @@ public class User {
         this.userLogged = userLogged;
     }
 
-    public static void setUsuarios(List<User> usuarios) {
-        User.usuarios = usuarios;
-    }
-
-    public void setCarrinhoDeCompras(List<Produto> carrinhoDeCompras) {
-        this.carrinhoDeCompras = carrinhoDeCompras;
-    }
+   // public void setCarrinhoDeCompras(List<Produto> carrinhoDeCompras) {
+  //      this.carrinhoDeCompras = carrinhoDeCompras;
+   // }
 
     private boolean userLogged = false;
 
-    private static List<User> usuarios = new ArrayList<>();
     private List<Produto> carrinhoDeCompras = new ArrayList<>();
 
 
@@ -71,39 +63,33 @@ public class User {
     }
 
 
-    public static List<User> getUsuarios() {
-        return usuarios;
-    }
 
-    public static void addUser(User user){
-        getUsuarios().add(user);
+
+    public static void addUser(List<User> users, User user){
+        users.add(user);
     }
 
     public List<Produto> getCarrinhoDeCompras() {
         return carrinhoDeCompras;
     }
 
-    public static User loginSystem(String login, String password){
+    public static User loginSystem(String login, String password, List<User> users) {
         boolean loginValidator = false;
 
-        User userLogado = (User) getUsuarios().stream().filter(user -> user.getUserName().equals(login) &&
-                user.getPassword().equals(password));
+        User userLogado = users.stream().filter(user -> user.getUserName().equals(login) &&
+                user.getPassword().equals(password)).findFirst().orElse(null);
+        if (userLogado != null) {
+            userLogado.setUserLogged(true);
 
-        userLogado.setUserLogged(true);
-
-        if(userLogado.isUserLogged()) {
-            System.out.println("Bem-vindo ao AdaTweeter "+ userLogado.getUserName() +"!");
-            System.out.println();
-            return userLogado;
-        }
-        else{
+            if (userLogado.isUserLogged()) {
+                System.out.println("Bem-vindo ao AdaTweeter " + userLogado.getUserName() + "!");
+                System.out.println();
+            }
+        } else {
             System.out.println("Login ou Senha são invalidos, ou usuário não foi cadastrado!");
             System.out.println();
-
-            return null;
         }
-
-
+        return userLogado;
     }
 
     public  double totalAPagar() {
