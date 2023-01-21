@@ -493,17 +493,26 @@ public class Livraria {
                                                 case 1 -> {
                                                     System.out.println("Informe o nome do album: ");
                                                     String nome = sc.nextLine();
-                                                    for (Album album : albunsList) {
-                                                        if (album.getNome().equals(nome)) {
-                                                            if (album.getNumProdutos() > 0) {
-                                                                user.getCarrinhoDeCompras().add(album);
-                                                                album.setNumProdutos(album.getNumProdutos() - 1);
+
+                                                    if (albunsList.size() > 0) {
+                                                        for (Album album : albunsList) {
+                                                            if (album.getNome().equals(nome)) {
+                                                                if (album.getNumProdutos() > 0) {
+                                                                    Album newProduto = new Album(ProdutoEnum.ALBUNS_DE_MUSICA,
+                                                                            album.getNome(), album.getGenero(), album.getPreco(),
+                                                                            1, album.getMusicosEBandas(), album.getSelos());
+                                                                    newProduto.setId(album.getId());
+                                                                    user.getCarrinhoDeCompras().add(newProduto);
+                                                                    album.setNumProdutos(album.getNumProdutos() - 1);
+                                                                } else {
+                                                                    System.out.println(msgProtudoEmFalta);
+                                                                }
                                                             } else {
-                                                                System.out.println(msgProtudoEmFalta);
+                                                                System.out.println(msgNaoExiste);
                                                             }
-                                                        } else {
-                                                            System.out.println(msgNaoExiste);
                                                         }
+                                                    } else {
+                                                        System.out.println(msgNaoHaProdutosCadastrados);
                                                     }
                                                     break;
 
@@ -513,18 +522,26 @@ public class Livraria {
                                                 case 2 -> {
                                                     System.out.println("Informe o nome do briquedo: ");
                                                     String nome = sc.nextLine();
-                                                    for (Brinquedo toy : brinquedosList) {
-                                                        if (toy.getNome().equals(nome)) {
-                                                            if (toy.getNumProdutos() > 0) {
-                                                                user.getCarrinhoDeCompras().add(toy);
-                                                                toy.setNumProdutos(toy.getNumProdutos() - 1);
-                                                                System.out.println(msgSucess);
+                                                    if (brinquedosList.size() > 0) {
+                                                        for (Brinquedo toy : brinquedosList) {
+                                                            if (toy.getNome().equals(nome)) {
+                                                                if (toy.getNumProdutos() > 0) {
+                                                                    Brinquedo newProduto = new Brinquedo(ProdutoEnum.BRINQUEDO,
+                                                                            toy.getNome(), toy.getPreco(),
+                                                                            1, toy.getTipo());
+                                                                    newProduto.setId(toy.getId());
+                                                                    user.getCarrinhoDeCompras().add(newProduto);
+                                                                    toy.setNumProdutos(toy.getNumProdutos() - 1);
+                                                                    System.out.println(msgSucess);
+                                                                } else {
+                                                                    System.out.println(msgProtudoEmFalta);
+                                                                }
                                                             } else {
-                                                                System.out.println(msgProtudoEmFalta);
+                                                                System.out.println(msgNaoExiste);
                                                             }
-                                                        } else {
-                                                            System.out.println(msgNaoExiste);
                                                         }
+                                                    } else {
+                                                        System.out.println(msgNaoHaProdutosCadastrados);
                                                     }
                                                     break;
 
@@ -533,17 +550,26 @@ public class Livraria {
                                                 case 3 -> {
                                                     System.out.println("Informe o nome do Filme: ");
                                                     String nome = sc.nextLine();
-                                                    for (Filme filme : filmesList) {
-                                                        if (filme.getNome().equals(nome)) {
-                                                            if (filme.getNumProdutos() > 0) {
-                                                                user.getCarrinhoDeCompras().add(filme);
-                                                                filme.setNumProdutos(filme.getNumProdutos() - 1);
+                                                    if (filmesList.size() > 0) {
+                                                        for (Filme filme : filmesList) {
+                                                            if (filme.getNome().equals(nome)) {
+                                                                if (filme.getNumProdutos() > 0) {
+                                                                    Filme newProduto = new Filme(ProdutoEnum.FILME,
+                                                                            filme.getNome(), filme.getGenero(), filme.getPreco(),
+                                                                            1, filme.getEstudio(), filme.getDiretores(),
+                                                                            filme.getProdutores());
+                                                                    newProduto.setId(newProduto.getId());
+                                                                    user.getCarrinhoDeCompras().add(newProduto);
+                                                                    filme.setNumProdutos(filme.getNumProdutos() - 1);
+                                                                } else {
+                                                                    System.out.println(msgProtudoEmFalta);
+                                                                }
                                                             } else {
-                                                                System.out.println(msgProtudoEmFalta);
+                                                                System.out.println(msgNaoExiste);
                                                             }
-                                                        } else {
-                                                            System.out.println(msgNaoExiste);
                                                         }
+                                                    } else {
+                                                        System.out.println(msgNaoHaProdutosCadastrados);
                                                     }
                                                     break;
 
@@ -553,18 +579,26 @@ public class Livraria {
                                                 case 4 -> {
                                                     System.out.println("Informe o nome do Jogo: ");
                                                     String nome = sc.nextLine();
-                                                    for (Jogo jogo : jogosList) {
-                                                        if (jogo.getNome().equals(nome)) {
-                                                            if (jogo.getNumProdutos() > 0) {
-                                                                user.getCarrinhoDeCompras().add(jogo);
-                                                                jogo.setNumProdutos(jogo.getNumProdutos() - 1);
-                                                                System.out.println(msgSucess);
+                                                    if (jogosList.size() > 0) {
+                                                        for (Jogo jogo : jogosList) {
+                                                            if (jogo.getNome().equals(nome)) {
+                                                                if (jogo.getNumProdutos() > 0) {
+                                                                    Jogo newProduto = new Jogo(ProdutoEnum.JOGO,
+                                                                            jogo.getNome(), jogo.getGenero(), jogo.getPreco(),
+                                                                            1, jogo.getDistribuidora(), jogo.getEstudio());
+                                                                    newProduto.setId(jogo.getId());
+                                                                    user.getCarrinhoDeCompras().add(newProduto);
+                                                                    jogo.setNumProdutos(jogo.getNumProdutos() - 1);
+                                                                    System.out.println(msgSucess);
+                                                                } else {
+                                                                    System.out.println(msgProtudoEmFalta);
+                                                                }
                                                             } else {
-                                                                System.out.println(msgProtudoEmFalta);
+                                                                System.out.println(msgNaoExiste);
                                                             }
-                                                        } else {
-                                                            System.out.println(msgNaoExiste);
                                                         }
+                                                    } else {
+                                                        System.out.println(msgNaoHaProdutosCadastrados);
                                                     }
                                                     break;
                                                 }
@@ -572,18 +606,26 @@ public class Livraria {
                                                 case 5 -> {
                                                     System.out.println("Informe o nome do Livro: ");
                                                     String nome = sc.nextLine();
-                                                    for (Livro livro : livrosList) {
-                                                        if (livro.getNome().equals(nome)) {
-                                                            if (livro.getNumProdutos() > 0) {
-                                                                user.getCarrinhoDeCompras().add(livro);
-                                                                livro.setNumProdutos(livro.getNumProdutos() - 1);
-                                                                System.out.println(msgSucess);
+                                                    if (livrosList.size() > 0) {
+                                                        for (Livro livro : livrosList) {
+                                                            if (livro.getNome().equals(nome)) {
+                                                                if (livro.getNumProdutos() > 0) {
+                                                                    Livro newProduto = new Livro(ProdutoEnum.LIVRO,
+                                                                            livro.getNome(), livro.getGenero(), livro.getPreco(),
+                                                                            1, livro.getEscritor(), livro.getEditora());
+                                                                    newProduto.setId(livro.getId());
+                                                                    user.getCarrinhoDeCompras().add(newProduto);
+                                                                    livro.setNumProdutos(livro.getNumProdutos() - 1);
+                                                                    System.out.println(msgSucess);
+                                                                } else {
+                                                                    System.out.println(msgProtudoEmFalta);
+                                                                }
                                                             } else {
-                                                                System.out.println(msgProtudoEmFalta);
+                                                                System.out.println(msgNaoExiste);
                                                             }
-                                                        } else {
-                                                            System.out.println(msgNaoExiste);
                                                         }
+                                                    } else {
+                                                        System.out.println(msgNaoHaProdutosCadastrados);
                                                     }
                                                     break;
 
@@ -893,11 +935,16 @@ public class Livraria {
                                                 case 1 -> {
                                                     System.out.println("Informe o nome do album: ");
                                                     String nome = sc.nextLine();
+
                                                     if (albunsList.size() > 0) {
                                                         for (Album album : albunsList) {
                                                             if (album.getNome().equals(nome)) {
                                                                 if (album.getNumProdutos() > 0) {
-                                                                    user.getCarrinhoDeCompras().add(album);
+                                                                    Album newProduto = new Album(ProdutoEnum.ALBUNS_DE_MUSICA,
+                                                                            album.getNome(), album.getGenero(), album.getPreco(),
+                                                                            1, album.getMusicosEBandas(), album.getSelos());
+                                                                    newProduto.setId(album.getId());
+                                                                    user.getCarrinhoDeCompras().add(newProduto);
                                                                     album.setNumProdutos(album.getNumProdutos() - 1);
                                                                 } else {
                                                                     System.out.println(msgProtudoEmFalta);
@@ -921,7 +968,11 @@ public class Livraria {
                                                         for (Brinquedo toy : brinquedosList) {
                                                             if (toy.getNome().equals(nome)) {
                                                                 if (toy.getNumProdutos() > 0) {
-                                                                    user.getCarrinhoDeCompras().add(toy);
+                                                                    Brinquedo newProduto = new Brinquedo(ProdutoEnum.BRINQUEDO,
+                                                                            toy.getNome(), toy.getPreco(),
+                                                                            1, toy.getTipo());
+                                                                    newProduto.setId(toy.getId());
+                                                                    user.getCarrinhoDeCompras().add(newProduto);
                                                                     toy.setNumProdutos(toy.getNumProdutos() - 1);
                                                                     System.out.println(msgSucess);
                                                                 } else {
@@ -945,7 +996,12 @@ public class Livraria {
                                                         for (Filme filme : filmesList) {
                                                             if (filme.getNome().equals(nome)) {
                                                                 if (filme.getNumProdutos() > 0) {
-                                                                    user.getCarrinhoDeCompras().add(filme);
+                                                                    Filme newProduto = new Filme(ProdutoEnum.FILME,
+                                                                            filme.getNome(), filme.getGenero(), filme.getPreco(),
+                                                                            1, filme.getEstudio(), filme.getDiretores(),
+                                                                            filme.getProdutores());
+                                                                    newProduto.setId(newProduto.getId());
+                                                                    user.getCarrinhoDeCompras().add(newProduto);
                                                                     filme.setNumProdutos(filme.getNumProdutos() - 1);
                                                                 } else {
                                                                     System.out.println(msgProtudoEmFalta);
@@ -969,7 +1025,11 @@ public class Livraria {
                                                         for (Jogo jogo : jogosList) {
                                                             if (jogo.getNome().equals(nome)) {
                                                                 if (jogo.getNumProdutos() > 0) {
-                                                                    user.getCarrinhoDeCompras().add(jogo);
+                                                                    Jogo newProduto = new Jogo(ProdutoEnum.JOGO,
+                                                                            jogo.getNome(), jogo.getGenero(), jogo.getPreco(),
+                                                                            1, jogo.getDistribuidora(), jogo.getEstudio());
+                                                                    newProduto.setId(jogo.getId());
+                                                                    user.getCarrinhoDeCompras().add(newProduto);
                                                                     jogo.setNumProdutos(jogo.getNumProdutos() - 1);
                                                                     System.out.println(msgSucess);
                                                                 } else {
@@ -992,7 +1052,11 @@ public class Livraria {
                                                         for (Livro livro : livrosList) {
                                                             if (livro.getNome().equals(nome)) {
                                                                 if (livro.getNumProdutos() > 0) {
-                                                                    user.getCarrinhoDeCompras().add(livro);
+                                                                    Livro newProduto = new Livro(ProdutoEnum.LIVRO,
+                                                                            livro.getNome(), livro.getGenero(), livro.getPreco(),
+                                                                            1, livro.getEscritor(), livro.getEditora());
+                                                                    newProduto.setId(livro.getId());
+                                                                    user.getCarrinhoDeCompras().add(newProduto);
                                                                     livro.setNumProdutos(livro.getNumProdutos() - 1);
                                                                     System.out.println(msgSucess);
                                                                 } else {
